@@ -4,6 +4,7 @@ import '@polymer/paper-icon-button/paper-icon-button.js';
 import '@polymer/paper-item/paper-icon-item.js';
 import '@polymer/paper-item/paper-item.js';
 import '@polymer/paper-listbox/paper-listbox.js';
+import '@material/mwc-ripple';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import './ha-icon.js';
@@ -11,6 +12,10 @@ import './ha-icon.js';
 import '../util/hass-translation.js';
 import LocalizeMixin from '../mixins/localize-mixin.js';
 import isComponentLoaded from '../common/config/is_component_loaded.js';
+
+// Temporary fix until mwc-ripple 0.3.1 is released
+import { templateFactory } from 'lit-html';
+templateFactory.templateFactory = templateFactory;
 
 /*
  * @appliesMixin LocalizeMixin
@@ -125,6 +130,8 @@ class HaSidebar extends LocalizeMixin(PolymerElement) {
       .profile-badge {
         /* for ripple */
         position: relative;
+        overflow: hidden;
+
         box-sizing: border-box;
         width: 40px;
         line-height: 40px;
@@ -144,7 +151,7 @@ class HaSidebar extends LocalizeMixin(PolymerElement) {
       <div main-title=>Home Assistant</div>
       <template is='dom-if' if='[[hass.user]]'>
         <a href='/profile' class$='[[_computeBadgeClass(_initials)]]'>
-          <paper-ripple></paper-ripple>
+          <mwc-ripple></mwc-ripple>
           [[_initials]]
         </a>
       </template>
